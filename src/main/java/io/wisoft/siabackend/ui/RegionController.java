@@ -1,9 +1,8 @@
 package io.wisoft.siabackend.ui;
 
 import io.wisoft.siabackend.domain.AreaOfInterest;
-import io.wisoft.siabackend.service.RegionService;
+import io.wisoft.siabackend.application.RegionService;
 import lombok.*;
-import org.locationtech.jts.geom.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +32,8 @@ public class RegionController {
     return ResponseEntity.status(CREATED).body(new RegionResponseDTO(id));
   }
 
-  @GetMapping("/{id}/aois/intersects")
-  public ResponseEntity<AreaOfInterestsResponseDTO> findAreaOfInterestsIntersectedRegion(@PathVariable("id") Long id) {
+  @GetMapping("/{region-id}/aois/intersects")
+  public ResponseEntity<AreaOfInterestsResponseDTO> findAreaOfInterestsIntersectedRegion(@PathVariable("region-id") Long id) {
     List<AreaOfInterest> areaOfInterestIntersectedRegion = service.findAreaOfInterestsIntersectedRegion(id);
     System.out.println(areaOfInterestIntersectedRegion);
 
@@ -81,7 +79,6 @@ public class RegionController {
     }
 
   }
-
 
   @AllArgsConstructor
   @Getter

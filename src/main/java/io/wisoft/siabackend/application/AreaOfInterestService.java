@@ -1,4 +1,4 @@
-package io.wisoft.siabackend.service;
+package io.wisoft.siabackend.application;
 
 import io.wisoft.siabackend.domain.AreaOfInterest;
 import io.wisoft.siabackend.infrastructure.AreaOfInterestRepository;

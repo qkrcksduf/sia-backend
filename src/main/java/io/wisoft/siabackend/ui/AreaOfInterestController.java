@@ -1,9 +1,10 @@
 package io.wisoft.siabackend.ui;
 
-import io.wisoft.siabackend.service.AreaOfInterestService;
+import io.wisoft.siabackend.application.AreaOfInterestService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,7 @@ public class AreaOfInterestController {
 
   // 현재 시점에서는 구현해야 하는 기능이 많이 없기 때문에 DTO는 해당 DTO를 사용하는 inner 클래스로 만듬.
   @AllArgsConstructor
+  @ToString
   @Getter
   public static class AreaOfInterestRegisterDTO {
 

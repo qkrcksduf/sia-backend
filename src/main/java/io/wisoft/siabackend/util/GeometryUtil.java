@@ -6,6 +6,7 @@ import org.locationtech.jts.io.WKTReader;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class GeometryUtil {
 

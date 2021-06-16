@@ -11,3 +11,18 @@ Content-Type: application/json
     {"x": 127.02, "y": 37.742}
   ]
 }
+
+###
+POST localhost:8083/regions
+Content-Type: application/json
+
+{
+  "name": "서울시",
+  "area": [
+    {"x": 126.835, "y": 37.688},
+    {"x": 127.155, "y": 37.702},
+    {"x": 127.184, "y": 37.474},
+    {"x": 126.821, "y": 37.454},
+    {"x": 126.835, "y": 37.688}
+  ]
+}

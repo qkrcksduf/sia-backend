@@ -2,15 +2,23 @@ io/wisoft/siabackend/SiaBackendApplication.java
  io.wisoft.siabackend.SiaBackendApplication
 io/wisoft/siabackend/infrastructure/AreaOfInterestRepository.java
  io.wisoft.siabackend.infrastructure.AreaOfInterestRepository
+io/wisoft/siabackend/ui/RegionController.java
+ io.wisoft.siabackend.ui.RegionController
+ io.wisoft.siabackend.ui.RegionController$RegionRegisterDTO
+ io.wisoft.siabackend.ui.RegionController$RegionResponseDTO
+io/wisoft/siabackend/infrastructure/RegionRepository.java
+ io.wisoft.siabackend.infrastructure.RegionRepository
 io/wisoft/siabackend/util/GeometryUtil.java
  io.wisoft.siabackend.util.GeometryUtil
-io/wisoft/siabackend/domain/AreaOfInterest.java
- io.wisoft.siabackend.domain.AreaOfInterest
-io/wisoft/siabackend/ui/AreaOfInterestRegisterDTO.java
- io.wisoft.siabackend.ui.AreaOfInterestRegisterDTO
-io/wisoft/siabackend/service/AreaOfInterestService.java
- io.wisoft.siabackend.service.AreaOfInterestService
-io/wisoft/siabackend/ui/AreaOfInterestResponseDTO.java
- io.wisoft.siabackend.ui.AreaOfInterestResponseDTO
 io/wisoft/siabackend/ui/AreaOfInterestController.java
  io.wisoft.siabackend.ui.AreaOfInterestController
+ io.wisoft.siabackend.ui.AreaOfInterestController$AreaOfInterestRegisterDTO
+ io.wisoft.siabackend.ui.AreaOfInterestController$AreaOfInterestResponseDTO
+io/wisoft/siabackend/service/AreaOfInterestService.java
+ io.wisoft.siabackend.service.AreaOfInterestService
+io/wisoft/siabackend/domain/Region.java
+ io.wisoft.siabackend.domain.Region
+io/wisoft/siabackend/domain/AreaOfInterest.java
+ io.wisoft.siabackend.domain.AreaOfInterest
+io/wisoft/siabackend/service/RegionService.java
+ io.wisoft.siabackend.service.RegionService

@@ -1,4 +1,0 @@
-io/wisoft/siabackend/SiaBackendApplicationTests.java
- io.wisoft.siabackend.SiaBackendApplicationTests
-io/wisoft/siabackend/infrastructure/SpatialTableRepositoryTest.java
- io.wisoft.siabackend.infrastructure.SpatialTableRepositoryTest

@@ -1,2 +1,16 @@
 io/wisoft/siabackend/SiaBackendApplication.java
  io.wisoft.siabackend.SiaBackendApplication
+io/wisoft/siabackend/infrastructure/AreaOfInterestRepository.java
+ io.wisoft.siabackend.infrastructure.AreaOfInterestRepository
+io/wisoft/siabackend/util/GeometryUtil.java
+ io.wisoft.siabackend.util.GeometryUtil
+io/wisoft/siabackend/domain/AreaOfInterest.java
+ io.wisoft.siabackend.domain.AreaOfInterest
+io/wisoft/siabackend/ui/AreaOfInterestRegisterDTO.java
+ io.wisoft.siabackend.ui.AreaOfInterestRegisterDTO
+io/wisoft/siabackend/service/AreaOfInterestService.java
+ io.wisoft.siabackend.service.AreaOfInterestService
+io/wisoft/siabackend/ui/AreaOfInterestResponseDTO.java
+ io.wisoft.siabackend.ui.AreaOfInterestResponseDTO
+io/wisoft/siabackend/ui/AreaOfInterestController.java
+ io.wisoft.siabackend.ui.AreaOfInterestController

@@ -1,19 +1,21 @@
 package io.wisoft.siabackend.ui;
 
+import io.wisoft.siabackend.domain.AreaOfInterest;
 import io.wisoft.siabackend.service.RegionService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.locationtech.jts.geom.Point;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -32,17 +34,71 @@ public class RegionController {
     return ResponseEntity.status(CREATED).body(new RegionResponseDTO(id));
   }
 
+  @GetMapping("/{id}/aois/intersects")
+  public ResponseEntity<AreaOfInterestsResponseDTO> findAreaOfInterestsIntersectedRegion(@PathVariable("id") Long id) {
+    List<AreaOfInterest> areaOfInterestIntersectedRegion = service.findAreaOfInterestsIntersectedRegion(id);
+    System.out.println(areaOfInterestIntersectedRegion);
+
+    return ResponseEntity.status(HttpStatus.OK).body(new AreaOfInterestsResponseDTO(areaOfInterestIntersectedRegion));
+  }
+
+  private static List<Map<String, Double>> makeArea(String area) {
+    return Stream.of(area
+        .replace("POLYGON ((", "")
+        .replace("))", "")
+        .split(","))
+        .map(String::trim)
+        .map(s -> s.split(" "))
+        .map(s -> Map.of("x", Double.valueOf(s[0]), "y", Double.valueOf(s[1])))
+        .collect(Collectors.toList());
+  }
+
+  @Getter
+  public static class AreaOfInterestsResponseDTO {
+
+    private final List<AreaOfInterestIntersectionRegionDTO> aois = new ArrayList<>();
+
+    public AreaOfInterestsResponseDTO(List<AreaOfInterest> areaOfInterests) {
+      for (AreaOfInterest areaOfInterest : areaOfInterests) {
+        this.aois.add(new AreaOfInterestIntersectionRegionDTO(areaOfInterest));
+      }
+    }
+
+  }
+
+
+  @Getter
+  public static class AreaOfInterestIntersectionRegionDTO {
+
+    private final Long id;
+    private final String name;
+    private final List<Map<String, Double>> area;
+
+    public AreaOfInterestIntersectionRegionDTO(final AreaOfInterest areaOfInterest) {
+      this.id = areaOfInterest.getId();
+      this.name = areaOfInterest.getName();
+      this.area = makeArea(areaOfInterest.getArea().toString());
+    }
+
+  }
+
+
   @AllArgsConstructor
   @Getter
   public static class RegionRegisterDTO {
+
+    @NotBlank
     private final String name;
     private final List<Map<String, Double>> area;
+
   }
 
   @AllArgsConstructor
   @Getter
   public static class RegionResponseDTO {
+
     private final Long id;
+
   }
 
 }

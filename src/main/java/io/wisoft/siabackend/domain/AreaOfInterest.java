@@ -2,6 +2,7 @@ package io.wisoft.siabackend.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import static lombok.AccessLevel.*;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "aoi")
 @SequenceGenerator(name = "aoi_sequence_generator")

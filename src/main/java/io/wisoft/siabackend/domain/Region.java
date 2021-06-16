@@ -2,6 +2,7 @@ package io.wisoft.siabackend.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.locationtech.jts.geom.Polygon;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import static lombok.AccessLevel.*;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor(access = PROTECTED)
 @SequenceGenerator(name = "region_sequence_generator")
 public class Region {
@@ -19,7 +21,7 @@ public class Region {
   @Column(columnDefinition = "bigserial")
   private Long id;
 
-  @Column(columnDefinition = "varchar(30)", nullable = false, unique = true)
+  @Column(columnDefinition = "varchar(30)", nullable = false)
   private String name;
 
   @Column(columnDefinition = "geometry('Polygon', 4326)")

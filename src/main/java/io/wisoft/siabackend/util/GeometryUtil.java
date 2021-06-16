@@ -31,8 +31,6 @@ public class GeometryUtil {
     }
     polygon.deleteCharAt(polygon.length() - 1);
     polygon.append("))");
-    System.out.println(polygon);
-    System.out.println(polygon.length());
     return String.valueOf(polygon);
   }
 

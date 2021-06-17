@@ -60,7 +60,6 @@ public class AreaOfInterestServiceUnitTest {
     //then
     assertEquals(expectedPolygon, stringPolygon);
     assertEquals(Polygon.class, polygon.getClass());
-
   }
 
   private AreaOfInterestRegisterDTO createRegisterDTO() {

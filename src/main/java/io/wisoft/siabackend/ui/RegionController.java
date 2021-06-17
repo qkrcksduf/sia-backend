@@ -12,9 +12,8 @@ import javax.validation.constraints.NotBlank;
 
 import java.util.*;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import static io.wisoft.siabackend.util.GeometryUtil.makeArea;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -35,21 +34,11 @@ public class RegionController {
   @GetMapping("/{region-id}/aois/intersects")
   public ResponseEntity<AreaOfInterestsResponseDTO> findAreaOfInterestsIntersectedRegion(@PathVariable("region-id") Long id) {
     List<AreaOfInterest> areaOfInterestIntersectedRegion = service.findAreaOfInterestsIntersectedRegion(id);
-    System.out.println(areaOfInterestIntersectedRegion);
 
     return ResponseEntity.status(HttpStatus.OK).body(new AreaOfInterestsResponseDTO(areaOfInterestIntersectedRegion));
   }
 
-  private static List<Map<String, Double>> makeArea(String area) {
-    return Stream.of(area
-        .replace("POLYGON ((", "")
-        .replace("))", "")
-        .split(","))
-        .map(String::trim)
-        .map(s -> s.split(" "))
-        .map(s -> Map.of("x", Double.valueOf(s[0]), "y", Double.valueOf(s[1])))
-        .collect(Collectors.toList());
-  }
+
 
   @Getter
   public static class AreaOfInterestsResponseDTO {
@@ -63,7 +52,6 @@ public class RegionController {
     }
 
   }
-
 
   @Getter
   public static class AreaOfInterestIntersectionRegionDTO {

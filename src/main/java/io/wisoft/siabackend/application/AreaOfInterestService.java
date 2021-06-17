@@ -7,11 +7,13 @@ import io.wisoft.siabackend.ui.AreaOfInterestController.AreaOfInterestRegisterDT
 import io.wisoft.siabackend.util.GeometryUtil;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static io.wisoft.siabackend.domain.AreaOfInterest.createAreaOfInterest;
+import static io.wisoft.siabackend.util.GeometryUtil.makePoint;
 import static io.wisoft.siabackend.util.GeometryUtil.makePolygon;
 
 @Service
@@ -29,6 +31,12 @@ public class AreaOfInterestService {
     repository.save(areaOfInterest);
 
     return areaOfInterest.getId();
+  }
+
+  public AreaOfInterest findAreaOfInterestClosestSpecificCoordinate(final Double latitude, final Double longitude) {
+    String point = makePoint(latitude, longitude);
+
+    return repository.findAreaOfInterestClosestSpecificCoordinate(point);
   }
 
 }

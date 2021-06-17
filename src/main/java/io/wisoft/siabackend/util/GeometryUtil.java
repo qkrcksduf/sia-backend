@@ -6,6 +6,7 @@ import org.locationtech.jts.io.WKTReader;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GeometryUtil {
@@ -33,6 +34,21 @@ public class GeometryUtil {
     polygon.deleteCharAt(polygon.length() - 1);
     polygon.append("))");
     return String.valueOf(polygon);
+  }
+
+  public static String makePoint(Double latitude, Double longitude) {
+    return "POINT(" + latitude + " " + longitude + ")";
+  }
+
+  public static List<Map<String, Double>> makeArea(String area) {
+    return Stream.of(area
+        .replace("POLYGON ((", "")
+        .replace("))", "")
+        .split(","))
+        .map(String::trim)
+        .map(s -> s.split(" "))
+        .map(s -> Map.of("x", Double.valueOf(s[0]), "y", Double.valueOf(s[1])))
+        .collect(Collectors.toList());
   }
 
 }

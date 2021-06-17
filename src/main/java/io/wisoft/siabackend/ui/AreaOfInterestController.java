@@ -1,22 +1,21 @@
 package io.wisoft.siabackend.ui;
 
 import io.wisoft.siabackend.application.AreaOfInterestService;
+import io.wisoft.siabackend.domain.AreaOfInterest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Map;
 
+import static io.wisoft.siabackend.util.GeometryUtil.makeArea;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/aois")
@@ -33,9 +32,30 @@ public class AreaOfInterestController {
     return ResponseEntity.status(CREATED).body(new AreaOfInterestResponseDTO(id));
   }
 
+  @GetMapping()
+  public ResponseEntity<AreaOfInterestClosestSpecificCoordinate> findAreaOfInterestClosestSpecificCoordinate(@RequestParam("lat") Double latitude, @RequestParam("long") Double longitude) {
+    AreaOfInterest areaOfInterestClosestSpecificCoordinate = service.findAreaOfInterestClosestSpecificCoordinate(latitude, longitude);
+
+    return ResponseEntity.status(OK).body(new AreaOfInterestClosestSpecificCoordinate(areaOfInterestClosestSpecificCoordinate));
+  }
+
+  @Getter
+  public static class AreaOfInterestClosestSpecificCoordinate {
+
+    private final Long id;
+    private final String name;
+    private final List<Map<String, Double>> area;
+
+    public AreaOfInterestClosestSpecificCoordinate(final AreaOfInterest areaOfInterest) {
+      this.id = areaOfInterest.getId();
+      this.name = areaOfInterest.getName();
+      this.area = makeArea(areaOfInterest.getArea().toString());
+    }
+
+  }
+
   // 현재 시점에서는 구현해야 하는 기능이 많이 없기 때문에 DTO는 해당 DTO를 사용하는 inner 클래스로 만듬.
   @AllArgsConstructor
-  @ToString
   @Getter
   public static class AreaOfInterestRegisterDTO {
 

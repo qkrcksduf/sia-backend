@@ -1,6 +1,7 @@
 package io.wisoft.siabackend.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.wisoft.siabackend.application.AreaOfInterestService;
 import io.wisoft.siabackend.ui.AreaOfInterestController.AreaOfInterestRegisterDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ import java.io.File;
 
 import static io.wisoft.siabackend.util.MakeDTO.createAOIRegisterDTO;
 import static org.hamcrest.core.Is.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -37,6 +39,9 @@ public class AreaOfInterestControllerIntegrationTest {
 
   @Autowired
   private ObjectMapper objectMapper;
+
+  @Autowired
+  private AreaOfInterestService areaOfInterestService;
 
   @Container
   static DockerComposeContainer postgreSQLContainer =
@@ -59,6 +64,22 @@ public class AreaOfInterestControllerIntegrationTest {
     //then
     resultActions.andExpect(status().isCreated());
     resultActions.andExpect(jsonPath("$.id", is(1)));
+  }
+
+  //조회 테스트는 삽입도 함께 이루어지므로 통합 테스트만 수행한다.
+  @Test
+  @DisplayName("특정 좌표에 가장 가까운 관심지역 조회 테스트")
+  public void findAreaOfInterestsIntersectedRegionTest() throws Exception {
+    //given
+    AreaOfInterestRegisterDTO areaOfInterestRegisterDTO = createAOIRegisterDTO();
+    areaOfInterestService.areaOfInterestRegister(areaOfInterestRegisterDTO);
+
+    //when
+    ResultActions resultActions = mvc.perform(get("/aois?lat=126.837&long=37.689"));
+
+    //then
+    resultActions.andDo(print());
+    resultActions.andExpect(status().isOk());
   }
 
 }

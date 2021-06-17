@@ -40,6 +40,7 @@ public class AreaOfInterestControllerUnitTest {
     this.controller = new AreaOfInterestController(service);
   }
 
+  //unit test 이기 때문에 service 계층 이후는 모두 정상동작 된다.
   @Test
   @DisplayName("aoi 등록 테스트")
   public void registerAreaOfInterestTest() {

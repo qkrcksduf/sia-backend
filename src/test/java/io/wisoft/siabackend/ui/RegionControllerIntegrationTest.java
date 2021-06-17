@@ -1,6 +1,9 @@
 package io.wisoft.siabackend.ui;
 
+import io.wisoft.siabackend.application.AreaOfInterestService;
+import io.wisoft.siabackend.application.RegionService;
 import io.wisoft.siabackend.ui.RegionController.RegionRegisterDTO;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static io.wisoft.siabackend.ui.AreaOfInterestController.*;
+import static io.wisoft.siabackend.util.MakeDTO.createAOIRegisterDTO;
 import static org.hamcrest.core.Is.is;
 
 import java.io.File;
 
 import static io.wisoft.siabackend.util.MakeDTO.createRegionRegisterDTO;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,6 +41,12 @@ public class RegionControllerIntegrationTest {
 
   @Autowired
   private MockMvc mvc;
+
+  @Autowired
+  private RegionService regionService;
+
+  @Autowired
+  private AreaOfInterestService areaOfInterestService;
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -58,6 +71,24 @@ public class RegionControllerIntegrationTest {
     //then
     resultActions.andExpect(status().isCreated());
     resultActions.andExpect(jsonPath("$.id", is(1)));
+  }
+
+  //조회 테스트는 삽입도 함께 이루어지므로 통합 테스트만 수행한다.
+  @Test
+  @DisplayName("행정지역에 지리적으로 포함되는 관심지역 조회 테스트")
+  public void findAreaOfInterestsIntersectedRegionTest() throws Exception {
+    //given
+    RegionRegisterDTO regionRegisterDTO = createRegionRegisterDTO();
+    AreaOfInterestRegisterDTO areaOfInterestRegisterDTO = createAOIRegisterDTO();
+    regionService.regionRegister(regionRegisterDTO);
+    areaOfInterestService.areaOfInterestRegister(areaOfInterestRegisterDTO);
+
+    //when
+    ResultActions resultActions = mvc.perform(get("/regions/1/aois/intersects"));
+
+    //then
+    resultActions.andDo(print());
+    resultActions.andExpect(status().isOk());
   }
 
 }

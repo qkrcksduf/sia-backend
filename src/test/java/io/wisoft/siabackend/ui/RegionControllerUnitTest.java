@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.*;
 
 import static io.wisoft.siabackend.ui.RegionController.*;
+import static io.wisoft.siabackend.util.MakeDTO.createRegionRegisterDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -41,10 +42,10 @@ class RegionControllerUnitTest {
 
   //unit test 이기 때문에 service 계층 이후는 모두 정상동작 된다.
   @Test
-  @DisplayName("Region 등록 테스트")
-  public void registerRegion() {
+  @DisplayName("region 등록 테스트")
+  public void registerRegionTest() {
     //given
-    RegionRegisterDTO registerDTO = createRegisterDTO();
+    RegionRegisterDTO registerDTO = createRegionRegisterDTO();
     RegionResponseDTO responseId = new RegionResponseDTO(1L);
 
     //when
@@ -54,21 +55,6 @@ class RegionControllerUnitTest {
     //then
     assertEquals(CREATED, response.getStatusCode());
     assertEquals(responseId.getId(), Objects.requireNonNull(response.getBody()).getId());
-  }
-
-  private RegionRegisterDTO createRegisterDTO() {
-    List<Map<String, Double>> area = List.of(
-        Map.of("x", 126.835, "y", 37.688),
-        Map.of("x", 127.155, "y", 37.702),
-        Map.of("x", 127.184, "y", 37.474),
-        Map.of("x", 126.821, "y", 37.454),
-        Map.of("x", 126.835, "y", 37.688)
-    );
-
-    RegionRegisterDTO registerDTO = new RegionRegisterDTO();
-    registerDTO.setName("서울시");
-    registerDTO.setArea(area);
-    return registerDTO;
   }
 
 }

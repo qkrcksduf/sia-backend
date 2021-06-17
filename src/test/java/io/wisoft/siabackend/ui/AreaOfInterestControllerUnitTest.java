@@ -13,11 +13,10 @@ import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static io.wisoft.siabackend.ui.AreaOfInterestController.*;
+import static io.wisoft.siabackend.util.MakeDTO.createAOIRegisterDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -45,7 +44,7 @@ public class AreaOfInterestControllerUnitTest {
   @DisplayName("aoi 등록 테스트")
   public void registerAreaOfInterestTest() {
     //given
-    AreaOfInterestRegisterDTO registerDTO = createRegisterDTO();
+    AreaOfInterestRegisterDTO registerDTO = createAOIRegisterDTO();
     AreaOfInterestResponseDTO responseId = new AreaOfInterestResponseDTO(1L);
 
     //when
@@ -55,21 +54,6 @@ public class AreaOfInterestControllerUnitTest {
     //then
     assertEquals(CREATED, response.getStatusCode());
     assertEquals(responseId.getId(), Objects.requireNonNull(response.getBody()).getId());
-  }
-
-  private AreaOfInterestRegisterDTO createRegisterDTO() {
-    List<Map<String, Double>> area = List.of(
-        Map.of("x", 127.02, "y", 37.742),
-        Map.of("x", 127.023, "y", 37.664),
-        Map.of("x", 126.945, "y", 37.605),
-        Map.of("x", 126.962, "y", 37.692),
-        Map.of("x", 127.02, "y", 37.742)
-    );
-
-    AreaOfInterestRegisterDTO registerDTO = new AreaOfInterestRegisterDTO();
-    registerDTO.setName("북한산");
-    registerDTO.setArea(area);
-    return registerDTO;
   }
 
 }

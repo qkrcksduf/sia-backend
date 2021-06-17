@@ -19,12 +19,16 @@ repositories {
 }
 
 dependencies {
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
     implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.18.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.hibernate:hibernate-spatial:5.5.0.Final'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'org.apache.commons:commons-lang3:3.12.0'
+    testImplementation 'commons-codec:commons-codec:1.4'
+    testImplementation 'commons-io:commons-io:2.6'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
@@ -32,6 +36,11 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers:1.15.3'
     testImplementation "org.testcontainers:postgresql:1.15.3"
     testImplementation "org.testcontainers:junit-jupiter:1.15.3"
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vingate-engine'
+    }
+
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
 }
 
 test {

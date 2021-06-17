@@ -54,15 +54,6 @@ public class ControllerExceptionHandler {
     return ResponseEntity.status(NOT_FOUND).body(errorResponse);
   }
 
-  @ExceptionHandler(InternalServerError.class)
-  public ResponseEntity<ErrorResponse> internalServerErrorHandler(InternalServerError e) {
-    ErrorResponse errorResponse = ErrorResponse.builder()
-        .title("InternalServer Exception")
-        .message(e.getMessage())
-        .build();
-    return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(errorResponse);
-  }
-
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<ErrorResponse> illegalArgumentExceptionHandler(IllegalArgumentException e) {
     ErrorResponse errorResponse = ErrorResponse.builder()

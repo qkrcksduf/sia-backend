@@ -1,7 +1,6 @@
 package io.wisoft.siabackend.infrastructure;
 
 import io.wisoft.siabackend.domain.AreaOfInterest;
-import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

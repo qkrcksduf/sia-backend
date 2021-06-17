@@ -1,8 +1,6 @@
 package io.wisoft.siabackend.application;
 
-import io.wisoft.siabackend.domain.AreaOfInterest;
 import io.wisoft.siabackend.infrastructure.AreaOfInterestRepository;
-import io.wisoft.siabackend.ui.AreaOfInterestController;
 import io.wisoft.siabackend.ui.AreaOfInterestController.AreaOfInterestRegisterDTO;
 import io.wisoft.siabackend.util.GeometryUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +16,9 @@ import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 import static io.wisoft.siabackend.util.GeometryUtil.makePolygon;
+import static io.wisoft.siabackend.util.MakeDTO.createAOIRegisterDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,12 +41,12 @@ public class AreaOfInterestServiceUnitTest {
       new DockerComposeContainer(new File("src/test/resources/docker-compose.yml"));
 
   //실제 서비스가 반환하는 값은 영속성 컨텍스트에 저장되어 있는 키 값이다. 하지만 키 값을 얻기 위해서는
-  //Repository 와 통합테스트를 수행해야 하기때문에 단위테스트에서는 내부 메소드가 정상동작하는 지만 확인한다.
+  //Repository 와 통합테스트를 수행해야 하기때문에 단위테스트에서는 service 의 내부 메소드가 정상동작하는 지만 확인한다.
   @Test
   @DisplayName("aoi 등록 테스트")
   public void registerAreaOfInterestTest() {
     //given
-    AreaOfInterestRegisterDTO registerDTO = createRegisterDTO();
+    AreaOfInterestRegisterDTO registerDTO = createAOIRegisterDTO();
     String expectedPolygon = "POLYGON((127.02 37.742,127.023 37.664,126.945 37.605,126.962 37.692,127.02 37.742))";
 
     //when
@@ -60,21 +57,6 @@ public class AreaOfInterestServiceUnitTest {
     //then
     assertEquals(expectedPolygon, stringPolygon);
     assertEquals(Polygon.class, polygon.getClass());
-  }
-
-  private AreaOfInterestRegisterDTO createRegisterDTO() {
-    List<Map<String, Double>> area = List.of(
-        Map.of("x", 127.02, "y", 37.742),
-        Map.of("x", 127.023, "y", 37.664),
-        Map.of("x", 126.945, "y", 37.605),
-        Map.of("x", 126.962, "y", 37.692),
-        Map.of("x", 127.02, "y", 37.742)
-    );
-
-    AreaOfInterestRegisterDTO registerDTO = new AreaOfInterestRegisterDTO();
-    registerDTO.setName("서울시");
-    registerDTO.setArea(area);
-    return registerDTO;
   }
 
 }

@@ -3,19 +3,18 @@ package io.wisoft.siabackend.ui;
 import io.wisoft.siabackend.domain.AreaOfInterest;
 import io.wisoft.siabackend.application.RegionService;
 import lombok.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 import java.util.*;
 import java.util.List;
 
 import static io.wisoft.siabackend.util.GeometryUtil.makeArea;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,10 +35,8 @@ public class RegionController {
   public ResponseEntity<AreaOfInterestsResponseDTO> findAreaOfInterestsIntersectedRegion(@PathVariable("region-id") Long id) {
     List<AreaOfInterest> areaOfInterestIntersectedRegion = service.findAreaOfInterestsIntersectedRegion(id);
 
-    return ResponseEntity.status(HttpStatus.OK).body(new AreaOfInterestsResponseDTO(areaOfInterestIntersectedRegion));
+    return ResponseEntity.status(OK).body(new AreaOfInterestsResponseDTO(areaOfInterestIntersectedRegion));
   }
-
-
 
   @Getter
   public static class AreaOfInterestsResponseDTO {

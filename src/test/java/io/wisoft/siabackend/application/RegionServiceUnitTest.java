@@ -17,10 +17,9 @@ import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
 
 import static io.wisoft.siabackend.util.GeometryUtil.makePolygon;
+import static io.wisoft.siabackend.util.MakeDTO.createRegionRegisterDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,9 +48,9 @@ public class RegionServiceUnitTest {
   //Repository 와 통합테스트를 수행해야 하기때문에 단위테스트에서는 내부 메소드가 정상동작하는 지만 확인한다.
   @Test
   @DisplayName("region 등록 테스트")
-  public void registerRegion() {
+  public void registerRegionTest() {
     //given
-    RegionRegisterDTO registerDTO = createRegisterDTO();
+    RegionRegisterDTO registerDTO = createRegionRegisterDTO();
     String expectedPolygon = "POLYGON((126.835 37.688,127.155 37.702,127.184 37.474,126.821 37.454,126.835 37.688))";
 
 
@@ -63,21 +62,6 @@ public class RegionServiceUnitTest {
     //then
     assertEquals(expectedPolygon, stringPolygon);
     assertEquals(Polygon.class, polygon.getClass());
-  }
-
-  private RegionRegisterDTO createRegisterDTO() {
-    List<Map<String, Double>> area = List.of(
-        Map.of("x", 126.835, "y", 37.688),
-        Map.of("x", 127.155, "y", 37.702),
-        Map.of("x", 127.184, "y", 37.474),
-        Map.of("x", 126.821, "y", 37.454),
-        Map.of("x", 126.835, "y", 37.688)
-    );
-
-    RegionRegisterDTO registerDTO = new RegionRegisterDTO();
-    registerDTO.setName("서울시");
-    registerDTO.setArea(area);
-    return registerDTO;
   }
 
 }

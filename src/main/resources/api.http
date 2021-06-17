@@ -2,7 +2,7 @@ POST localhost:8083/aois
 Content-Type: application/json
 
 {
-
+  "name": "북한산",
   "area": [
     {"x": 127.02, "y": 37.742},
     {"x": 127.023, "y": 37.664},
@@ -22,10 +22,12 @@ Content-Type: application/json
     {"x": 126.835, "y": 37.688},
     {"x": 127.155, "y": 37.702},
     {"x": 127.184, "y": 37.474},
-    {"x": 126.821, "y": 37.454}
-
+    {"x": 126.821, "y": 37.454},
+    {"x": 126.835, "y": 37.688}
   ]
 }
+###
+GET localhost:8083/regions
 
 ###
 GET localhost:8083/regions/1/aois/intersects

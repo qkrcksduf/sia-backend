@@ -19,6 +19,7 @@ public class GeometryUtil {
 
     try {
       geometry = wktReader.read(wellKnownText);
+      geometry.setSRID(4326);
     } catch (ParseException e) {
       e.printStackTrace();
     }

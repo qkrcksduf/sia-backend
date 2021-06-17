@@ -2,9 +2,7 @@ package io.wisoft.siabackend.ui;
 
 import io.wisoft.siabackend.application.AreaOfInterestService;
 import io.wisoft.siabackend.domain.AreaOfInterest;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,13 +53,14 @@ public class AreaOfInterestController {
   }
 
   // 현재 시점에서는 구현해야 하는 기능이 많이 없기 때문에 DTO는 해당 DTO를 사용하는 inner 클래스로 만듬.
-  @AllArgsConstructor
   @Getter
+  @Setter
+  @NoArgsConstructor
   public static class AreaOfInterestRegisterDTO {
 
     @NotBlank
-    private final String name;
-    private final List<Map<String, Double>> area;
+    private String name;
+    private List<Map<String, Double>> area;
 
   }
 

@@ -52,7 +52,8 @@ public class RegionServiceUnitTest {
   public void registerRegion() {
     //given
     RegionRegisterDTO registerDTO = createRegisterDTO();
-    String expectedPolygon = "POLYGON((127.02 37.742,127.023 37.664,126.945 37.605,126.962 37.692,127.02 37.742))";
+    String expectedPolygon = "POLYGON((126.835 37.688,127.155 37.702,127.184 37.474,126.821 37.454,126.835 37.688))";
+
 
     //when
     String stringPolygon = makePolygon(registerDTO.getArea());
@@ -65,16 +66,18 @@ public class RegionServiceUnitTest {
   }
 
   private RegionRegisterDTO createRegisterDTO() {
-
     List<Map<String, Double>> area = List.of(
-        Map.of("x", 127.02, "y", 37.742),
-        Map.of("x", 127.023, "y", 37.664),
-        Map.of("x", 126.945, "y", 37.605),
-        Map.of("x", 126.962, "y", 37.692),
-        Map.of("x", 127.02, "y", 37.742)
+        Map.of("x", 126.835, "y", 37.688),
+        Map.of("x", 127.155, "y", 37.702),
+        Map.of("x", 127.184, "y", 37.474),
+        Map.of("x", 126.821, "y", 37.454),
+        Map.of("x", 126.835, "y", 37.688)
     );
 
-    return new RegionRegisterDTO("북한산", area);
+    RegionRegisterDTO registerDTO = new RegionRegisterDTO();
+    registerDTO.setName("서울시");
+    registerDTO.setArea(area);
+    return registerDTO;
   }
 
 }

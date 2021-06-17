@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import java.util.*;
 import java.util.List;
@@ -68,13 +69,14 @@ public class RegionController {
 
   }
 
-  @AllArgsConstructor
   @Getter
+  @Setter
+  @NoArgsConstructor
   public static class RegionRegisterDTO {
 
     @NotBlank
-    private final String name;
-    private final List<Map<String, Double>> area;
+    private String name;
+    private List<Map<String, Double>> area;
 
   }
 

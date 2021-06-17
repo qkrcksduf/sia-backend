@@ -59,14 +59,17 @@ public class AreaOfInterestControllerUnitTest {
 
   private AreaOfInterestRegisterDTO createRegisterDTO() {
     List<Map<String, Double>> area = List.of(
-        Map.of("x", 126.835, "y", 37.688),
-        Map.of("x", 127.155, "y", 37.702),
-        Map.of("x", 127.184, "y", 37.474),
-        Map.of("x", 126.821, "y", 37.454),
-        Map.of("x", 127.835, "y", 37.688)
+        Map.of("x", 127.02, "y", 37.742),
+        Map.of("x", 127.023, "y", 37.664),
+        Map.of("x", 126.945, "y", 37.605),
+        Map.of("x", 126.962, "y", 37.692),
+        Map.of("x", 127.02, "y", 37.742)
     );
 
-    return new AreaOfInterestRegisterDTO("서울시", area);
+    AreaOfInterestRegisterDTO registerDTO = new AreaOfInterestRegisterDTO();
+    registerDTO.setName("북한산");
+    registerDTO.setArea(area);
+    return registerDTO;
   }
 
 }

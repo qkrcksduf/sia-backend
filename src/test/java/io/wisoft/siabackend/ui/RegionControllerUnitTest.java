@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -23,6 +24,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @ExtendWith(MockitoExtension.class)
 @Testcontainers
+@Transactional
 @SuppressWarnings("rawtypes")
 class RegionControllerUnitTest {
 

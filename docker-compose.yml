@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  database:
+    image: postgis/postgis
+    ports:
+      - 5434:5432
+    restart: always
+    environment:
+      - POSTGRES_USER=gis
+      - POSTGRES_DB=gis
+      - POSTGRES_PASSWORD=gis
+    volumes:
+      - ./init/:/docker-entrypoint-initdb.d/
+
+  sia-backend:
+    image: qkrcksduf/sia-backend
+    environment:
+      - JAVA_OPTS=
+        -DDB_HOST=192.168.10.74
+    depends_on:
+      - database
+    ports:
+      - 8083:8083
+    restart: always
+

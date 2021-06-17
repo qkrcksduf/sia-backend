@@ -18,8 +18,10 @@ import org.testcontainers.junit.jupiter.Container;
 import java.io.File;
 
 import static io.wisoft.siabackend.util.GeometryUtil.makePolygon;
+import static io.wisoft.siabackend.util.MakeDTO.createAOINoClosedLinestring;
 import static io.wisoft.siabackend.util.MakeDTO.createAOIRegisterDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 @Transactional
@@ -57,6 +59,18 @@ public class AreaOfInterestServiceUnitTest {
     //then
     assertEquals(expectedPolygon, stringPolygon);
     assertEquals(Polygon.class, polygon.getClass());
+  }
+
+  @Test
+  @DisplayName("aoi 등록시 polygon의 시작점과 끝점이 일치하지 않아 polygon을 만들수 없는 IllegalArgumentException 테스트")
+  public void registerAreaOfInterestIllegalArgumentExceptionTest() {
+    //given
+    AreaOfInterestRegisterDTO registerDTO = createAOINoClosedLinestring();
+
+    //then
+    assertThrows(IllegalArgumentException.class, () -> {
+      service.areaOfInterestRegister(registerDTO);
+    });
   }
 
 }

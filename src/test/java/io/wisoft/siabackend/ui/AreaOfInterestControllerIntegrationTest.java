@@ -19,7 +19,7 @@ import org.testcontainers.junit.jupiter.Container;
 
 import java.io.File;
 
-import static io.wisoft.siabackend.util.MakeDTO.createAOIRegisterDTO;
+import static io.wisoft.siabackend.util.MakeDTO.*;
 import static org.hamcrest.core.Is.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,7 +41,7 @@ public class AreaOfInterestControllerIntegrationTest {
   private ObjectMapper objectMapper;
 
   @Autowired
-  private AreaOfInterestService areaOfInterestService;
+  private AreaOfInterestService service;
 
   @Container
   static DockerComposeContainer postgreSQLContainer =
@@ -56,7 +56,7 @@ public class AreaOfInterestControllerIntegrationTest {
     AreaOfInterestRegisterDTO registerDTO = createAOIRegisterDTO();
 
     //when
-    ResultActions resultActions = mvc.perform(post("/regions")
+    ResultActions resultActions = mvc.perform(post("/aois")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(registerDTO)))
         .andDo(print());
@@ -66,15 +66,31 @@ public class AreaOfInterestControllerIntegrationTest {
     resultActions.andExpect(jsonPath("$.id", is(1)));
   }
 
+  @Test
+  @DisplayName("aoi 등록 DTO의 validaion 실패시 methodArgumentException 테스트")
+  public void registerAreaOfInterestValidationFailTest() throws Exception {
+    //given
+    AreaOfInterestRegisterDTO registerDTO = createAOINoNameRegisterDTO();
+
+    //when
+    ResultActions resultActions = mvc.perform(post("/aois")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(registerDTO)))
+        .andDo(print());
+
+    //then
+    resultActions.andExpect(status().isBadRequest());
+  }
+
   //조회 테스트는 삽입도 함께 이루어지므로 통합 테스트만 수행한다.
   @Test
   @DisplayName("특정 좌표에 가장 가까운 관심지역 조회 테스트")
   public void findAreaOfInterestsIntersectedRegionTest() throws Exception {
     //given
     AreaOfInterestRegisterDTO areaOfInterestRegisterDTO = createAOIRegisterDTO();
-    areaOfInterestService.areaOfInterestRegister(areaOfInterestRegisterDTO);
 
     //when
+    service.areaOfInterestRegister(areaOfInterestRegisterDTO);
     ResultActions resultActions = mvc.perform(get("/aois?lat=126.837&long=37.689"));
 
     //then

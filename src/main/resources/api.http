@@ -26,14 +26,9 @@ Content-Type: application/json
     {"x": 126.835, "y": 37.688}
   ]
 }
-###
-GET localhost:8083/regions
 
 ###
 GET localhost:8083/regions/1/aois/intersects
 
 ###
 GET localhost:8083/aois?lat=126.837&long=37.689
-
-###
-GET localhost:8083/aois/test

@@ -22,7 +22,7 @@ public class AreaOfInterest {
   @Column(columnDefinition = "bigserial")
   private Long id;
 
-  @Column(columnDefinition = "varchar(30)", nullable = false, unique = true)
+  @Column(unique = true, columnDefinition = "varchar(30)", nullable = false)
   private String name;
 
   @Column(columnDefinition = "geometry('Polygon', 4326)")

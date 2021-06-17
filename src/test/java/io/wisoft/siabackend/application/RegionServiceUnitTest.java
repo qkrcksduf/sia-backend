@@ -2,6 +2,7 @@ package io.wisoft.siabackend.application;
 
 import io.wisoft.siabackend.infrastructure.AreaOfInterestRepository;
 import io.wisoft.siabackend.infrastructure.RegionRepository;
+import io.wisoft.siabackend.ui.AreaOfInterestController;
 import io.wisoft.siabackend.ui.RegionController.RegionRegisterDTO;
 import io.wisoft.siabackend.util.GeometryUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +20,9 @@ import org.testcontainers.junit.jupiter.Container;
 import java.io.File;
 
 import static io.wisoft.siabackend.util.GeometryUtil.makePolygon;
-import static io.wisoft.siabackend.util.MakeDTO.createRegionRegisterDTO;
+import static io.wisoft.siabackend.util.MakeDTO.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 @Transactional
@@ -62,6 +64,18 @@ public class RegionServiceUnitTest {
     //then
     assertEquals(expectedPolygon, stringPolygon);
     assertEquals(Polygon.class, polygon.getClass());
+  }
+
+  @Test
+  @DisplayName("region 등록시 polygon의 시작점과 끝점이 일치하지 않아 polygon을 만들수 없는 IllegalArgumentException 테스트")
+  public void registerAreaOfInterestIllegalArgumentExceptionTest() {
+    //given
+    RegionRegisterDTO registerDTO = createRegionNoClosedLinestring();
+
+    //then
+    assertThrows(IllegalArgumentException.class, () -> {
+      service.regionRegister(registerDTO);
+    });
   }
 
 }
